@@ -5,6 +5,7 @@ const TOKEN = process.env.MAXCLAW_GATEWAY_TOKEN || 'minimax-agent'
 const CORS = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'}
 http.createServer((req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204, CORS); res.end(); return }
+  if (req.url === '/' || req.url === '/health') { res.writeHead(200, CORS); res.end('{"status":"ok"}'); return }
   if (req.url !== '/chat' || req.method !== 'POST') { res.writeHead(404, CORS); res.end('{"error":"use POST /chat"}'); return }
   let body = ''
   req.on('data', c => body += c)
